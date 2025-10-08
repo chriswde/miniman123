@@ -19,7 +19,7 @@
 !*.gohtml
 !*.js
 
-!*.example.json
+!*.sql
 
 !README.md
 !LICENSE
