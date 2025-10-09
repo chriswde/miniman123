@@ -12,7 +12,8 @@ type config struct {
 		Host string `json:"Host"`
 		Port int    `json:"Port"`
 	}
-	Host string
+	Host        string
+	HostAddress string `json:"HostAddress"`
 }
 
 var Configuration config

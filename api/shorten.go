@@ -44,7 +44,7 @@ func Shorten(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		s := fmt.Sprintf("%s/%s", configuration.Configuration.Host, base64.RawURLEncoding.EncodeToString([]byte(strconv.FormatInt(id, 10))))
+		s := fmt.Sprintf("%s/%s", configuration.Configuration.HostAddress, base64.RawURLEncoding.EncodeToString([]byte(strconv.FormatInt(id, 10))))
 
 		if isHTMXRequest {
 			re := `<div class="alert alert-success text-center user-select-all" id="urlAlert">` +
