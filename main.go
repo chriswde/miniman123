@@ -21,7 +21,7 @@ func main() {
 	router.Handle("/", http.HandlerFunc(HandleIndex))
 	router.Handle("/api/shorten", http.HandlerFunc(api.Shorten))
 
-	log.Println(http.ListenAndServe("127.0.0.1:80", router))
+	log.Println(http.ListenAndServe("127.0.0.1:3469", router))
 }
 
 func HandleIndex(w http.ResponseWriter, r *http.Request) {
