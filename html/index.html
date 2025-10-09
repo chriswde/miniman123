@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Miniman123 URL shortener</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/versions/bulma-no-helpers.min.css">
+  </head>
+  <body>
+    <div class="container" style="margin-top:20%;">
+      <h1 class="title">Miniman123 URL shortener</h1>
+      <form action="/api/shorten" method="post" class="columns" style="width:100%;">
+        <div class="field has-addons column" style="width:100%;">
+          <div class="control" style="width:100%;">
+            <input class="input" style="width:100%;" type="text" name="url" placeholder="Your URL">
+          </div>
+          <div class="control">
+            <button class="button is-link">shorten</button>
+          </div>
+        </div>
+      </form>
+      <progress class="progress is-large is-primary" style="visibility:hidden;" max="100"></progress>
+    </div>
+  </body>
+</html>
