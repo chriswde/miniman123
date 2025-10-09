@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/chriswde/miniman123/api"
+	"github.com/chriswde/miniman123/configuration"
 	"github.com/chriswde/miniman123/database"
 )
 
@@ -16,12 +17,17 @@ func main() {
 		log.Panicln(err)
 	}
 
+	err = configuration.Configuration.Init("./config.json")
+	if err != nil {
+		log.Panicln(err)
+	}
+
 	router := http.NewServeMux()
 	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	router.Handle("/", http.HandlerFunc(HandleIndex))
 	router.Handle("/api/shorten", http.HandlerFunc(api.Shorten))
 
-	log.Println(http.ListenAndServe("127.0.0.1:3469", router))
+	log.Println(http.ListenAndServe(configuration.Configuration.Host, router))
 }
 
 func HandleIndex(w http.ResponseWriter, r *http.Request) {

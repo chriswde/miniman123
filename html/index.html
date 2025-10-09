@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Miniman123 URL shortener</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/versions/bulma-no-helpers.min.css">
   </head>
-  <body>
-    <div class="container" style="margin-top:20%;">
-      <h1 class="title">Miniman123 URL shortener</h1>
-      <form action="/api/shorten" method="post" class="columns" style="width:100%;">
-        <div class="field has-addons column" style="width:100%;">
-          <div class="control" style="width:100%;">
-            <input class="input" style="width:100%;" type="url" name="url" placeholder="Your URL">
+  <body data-bs-theme="dark" class="h-100">
+    <div class="d-flex align-items-center justify-content-center h-100 w-100">
+      <div>
+        <h1 class="h1 fw-bold">Miniman123 URL shortener</h1>
+        <form action="/api/shorten" method="post" class="my-3" hx-boost="true" hx-target="#urlAlert" hx-swap="outerHTML" hx-push-url="/" hx-on::after-request="if(event.detail.successful) this.reset()">
+          <div class="input-group">
+            <input class="form-control form-control-lg" type="url" name="url" placeholder="Your URL">
+            <button class="btn btn-lg btn-primary">shorten</button>
           </div>
-          <div class="control">
-            <button class="button is-link">shorten</button>
-          </div>
+        </form>
+        <div class="alert alert-success text-center invisible" id="urlAlert">
+          yek
         </div>
-      </form>
-      <progress class="progress is-large is-primary" style="visibility:hidden;" max="100"></progress>
+      </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"></script>
   </body>
 </html>

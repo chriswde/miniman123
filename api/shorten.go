@@ -8,12 +8,23 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/chriswde/miniman123/configuration"
 	"github.com/chriswde/miniman123/database"
 )
 
 func Shorten(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		return
+	}
+
+	var isHTMXRequest = false
+	hxHeader := r.Header["Hx-Request"]
+	if len(hxHeader) == 1 {
+		var err error
+		isHTMXRequest, err = strconv.ParseBool(hxHeader[0])
+		if err != nil {
+			isHTMXRequest = false
+		}
 	}
 
 	url := r.FormValue("url")
@@ -33,8 +44,16 @@ func Shorten(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		s := base64.RawURLEncoding.EncodeToString([]byte(strconv.FormatInt(id, 10)))
-		fmt.Fprintf(w, "%s", s)
+		s := fmt.Sprintf("%s/%s", configuration.Configuration.Host, base64.RawURLEncoding.EncodeToString([]byte(strconv.FormatInt(id, 10))))
+
+		if isHTMXRequest {
+			re := `<div class="alert alert-success text-center user-select-all" id="urlAlert">` +
+				s +
+				`</div>`
+			fmt.Fprintf(w, "%s", re)
+		} else {
+			fmt.Fprintf(w, "%s", s)
+		}
 	} else {
 		w.WriteHeader(http.StatusBadRequest)
 		return
