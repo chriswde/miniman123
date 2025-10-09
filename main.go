@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/chriswde/miniman123/api"
 	"github.com/chriswde/miniman123/database"
@@ -17,11 +18,23 @@ func main() {
 
 	router := http.NewServeMux()
 	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	router.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		b, _ := os.ReadFile("./html/index.html")
-		w.Write(b)
-	}))
+	router.Handle("/", http.HandlerFunc(HandleIndex))
 	router.Handle("/api/shorten", http.HandlerFunc(api.Shorten))
 
 	log.Println(http.ListenAndServe("127.0.0.1:80", router))
+}
+
+func HandleIndex(w http.ResponseWriter, r *http.Request) {
+	isIndex := strings.TrimPrefix(r.URL.Path, "/")
+	if isIndex == "" {
+		b, err := os.ReadFile("./html/index.html")
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		w.Write(b)
+	} else {
+		api.Resolve(w, r)
+	}
 }
