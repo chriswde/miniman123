@@ -54,9 +54,9 @@ func Shorten(w http.ResponseWriter, r *http.Request) {
 				`<div class="alert alert-success text-center user-select-all">` +
 					shortURL +
 					"</div>" +
-					`<div class="alert alert-danger text-center">Deletion token<br>` +
+					`<div class="alert alert-danger text-center"><button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#deletionToken" aria-expanded="false" aria-controls="deletionToken">Show deletion token</button><br><div class="collapse" id="deletionToken">` +
 					encodedDeletionToken +
-					"</div>"
+					"</div></div>"
 			fmt.Fprintf(w, "%s", re)
 		} else {
 			fmt.Fprintf(w, "%s\n%s", shortURL, encodedDeletionToken)
