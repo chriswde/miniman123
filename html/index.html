@@ -10,14 +10,19 @@
     <div class="d-flex align-items-center justify-content-center h-100 w-100">
       <div>
         <h1 class="h1 fw-bold">Miniman123 URL shortener</h1>
-        <form action="/api/shorten" method="post" class="my-3" hx-boost="true" hx-target="#urlAlert" hx-swap="outerHTML" hx-push-url="/" hx-on::after-request="if(event.detail.successful) this.reset()">
+        <form action="/api/shorten" method="post" class="my-3" hx-boost="true" hx-target="#urlAlert" hx-swap="innerHTML" hx-push-url="/" hx-on::after-request="if(event.detail.successful) this.reset()">
           <div class="input-group">
             <input class="form-control form-control-lg" type="url" name="url" placeholder="Your URL">
             <button class="btn btn-lg btn-primary">shorten</button>
           </div>
         </form>
-        <div class="alert alert-success text-center invisible" id="urlAlert">
-          yek
+        <div id="urlAlert">
+          <div class="alert alert-success text-center invisible">
+            If you read this VI VON ZULUL
+          </div>
+          <div class="alert alert-success text-center invisible">
+            And forsen has to delete all weeb emotes
+          </div>
         </div>
       </div>
     </div>

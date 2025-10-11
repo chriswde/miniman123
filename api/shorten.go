@@ -10,6 +10,7 @@ import (
 
 	"github.com/chriswde/miniman123/configuration"
 	"github.com/chriswde/miniman123/database"
+	"github.com/google/uuid"
 )
 
 func Shorten(w http.ResponseWriter, r *http.Request) {
@@ -29,8 +30,9 @@ func Shorten(w http.ResponseWriter, r *http.Request) {
 
 	url := r.FormValue("url")
 	if strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://") {
-		stmt := "INSERT INTO `urls` (`url`) VALUES (?);"
-		insert, err := database.Connection.Exec(stmt, url)
+		stmt := "INSERT INTO `urls` (`url`, `deletion_token`) VALUES (?, ?);"
+		deletionToken := uuid.NewString()
+		insert, err := database.Connection.Exec(stmt, url, deletionToken)
 		if err != nil {
 			log.Println(err)
 			fmt.Fprintf(w, "%s", "Something happened Ö")
@@ -44,15 +46,20 @@ func Shorten(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		s := fmt.Sprintf("%s/%s", configuration.Configuration.HostAddress, base64.RawURLEncoding.EncodeToString([]byte(strconv.FormatInt(id, 10))))
+		shortURL := fmt.Sprintf("%s/%s", configuration.Configuration.HostAddress, base64.RawURLEncoding.EncodeToString([]byte(strconv.FormatInt(id, 10))))
+		encodedDeletionToken := base64.RawURLEncoding.EncodeToString([]byte(deletionToken))
 
 		if isHTMXRequest {
-			re := `<div class="alert alert-success text-center user-select-all" id="urlAlert">` +
-				s +
-				`</div>`
+			re :=
+				`<div class="alert alert-success text-center user-select-all">` +
+					shortURL +
+					"</div>" +
+					`<div class="alert alert-danger text-center">Deletion token<br>` +
+					encodedDeletionToken +
+					"</div>"
 			fmt.Fprintf(w, "%s", re)
 		} else {
-			fmt.Fprintf(w, "%s", s)
+			fmt.Fprintf(w, "%s\n%s", shortURL, encodedDeletionToken)
 		}
 	} else {
 		w.WriteHeader(http.StatusBadRequest)

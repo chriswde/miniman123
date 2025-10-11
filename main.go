@@ -26,6 +26,7 @@ func main() {
 	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	router.Handle("/", http.HandlerFunc(HandleIndex))
 	router.Handle("/api/shorten", http.HandlerFunc(api.Shorten))
+	router.Handle("/api/delete/", http.HandlerFunc(api.Delete))
 
 	log.Println(http.ListenAndServe(configuration.Configuration.Host, router))
 }
