@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/chriswde/miniman123/configuration"
-	"github.com/chriswde/miniman123/database"
+	"github.com/chriswde/miniman123/internal/configuration"
+	"github.com/chriswde/miniman123/internal/database"
 	"github.com/google/uuid"
 )
 

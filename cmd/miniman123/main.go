@@ -6,13 +6,13 @@ import (
 	"os"
 	"strings"
 
-	"github.com/chriswde/miniman123/api"
-	"github.com/chriswde/miniman123/configuration"
-	"github.com/chriswde/miniman123/database"
+	"github.com/chriswde/miniman123/internal/api"
+	"github.com/chriswde/miniman123/internal/configuration"
+	"github.com/chriswde/miniman123/internal/database"
 )
 
 func main() {
-	err := database.Init("./database/db.sqlite3")
+	err := database.Init("./db.sqlite3")
 	if err != nil {
 		log.Panicln(err)
 	}
@@ -34,7 +34,7 @@ func main() {
 func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	isIndex := strings.TrimPrefix(r.URL.Path, "/")
 	if isIndex == "" {
-		b, err := os.ReadFile("./html/index.html")
+		b, err := os.ReadFile("./web/html/index.html")
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)

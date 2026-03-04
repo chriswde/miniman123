@@ -52,7 +52,7 @@ func createDBFileIfNotExists(dbPath string) error {
 }
 
 func migrate(db *sql.DB) error {
-	migrations, err := os.ReadDir("./database/migration/")
+	migrations, err := os.ReadDir("./migrations/")
 	if err != nil {
 		return nil
 	}
@@ -62,7 +62,7 @@ func migrate(db *sql.DB) error {
 			continue
 		}
 
-		cont, err := os.ReadFile("./database/migration/" + m.Name())
+		cont, err := os.ReadFile("./migrations/" + m.Name())
 		if err != nil {
 			return err
 		}

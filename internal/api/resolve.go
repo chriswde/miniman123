@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/chriswde/miniman123/database"
+	"github.com/chriswde/miniman123/internal/database"
 )
 
 func Resolve(w http.ResponseWriter, r *http.Request) {

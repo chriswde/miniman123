@@ -7,14 +7,10 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/chriswde/miniman123/database"
+	"github.com/chriswde/miniman123/internal/database"
 )
 
 func Delete(w http.ResponseWriter, r *http.Request) {
-	// if r.Method != "GET" {
-	// 	return
-	// }
-
 	encodedDeletionToken := strings.TrimPrefix(r.URL.Path, "/api/delete/")
 	deletionToken, err := base64.RawURLEncoding.DecodeString(encodedDeletionToken)
 	if err != nil {
